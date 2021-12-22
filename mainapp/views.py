@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.views.generic import DetailView, View
 from django.http import HttpResponseRedirect
 
+from django.core.mail import send_mail
+
 from .models import Sneakers, Tshirt, Category, LatestProducts, Customer, Cart, CartProduct
 from .mixins import CategoryDetailMixin, CartMixin
 from .forms import OrderForm
@@ -162,6 +164,6 @@ class MakeOrderView(CartMixin, View):
             new_order.cart = self.cart
             new_order.save()
             customer.orders.add(new_order)
-            messages.add_message(request, messages.INFO, 'Спасибо за заказ! Менеджер с Вами свяжется')
+            messages.add_message(request, messages.INFO, 'Спасибо за заказ!')
             return HttpResponseRedirect('/')
         return HttpResponseRedirect('/checkout/')
